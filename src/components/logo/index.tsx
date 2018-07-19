@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Tilt from 'react-tilt'
-import "./logo.css";
+import "./index.css";
 import magnifier from "./magnifier_glass_128x128.png";
 
 const Logo = () => {

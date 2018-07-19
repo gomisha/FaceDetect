@@ -3,7 +3,7 @@ import "tachyons";
 import './App.css';
 import Logo from "./components/logo";
 import Navigation from "./components/navigation";
-
+import ImageLinkForm from "./components/image-link-form";
 
 class App extends React.Component {
   public render() {
@@ -11,6 +11,7 @@ class App extends React.Component {
       <div className="App">
         <Navigation/>
         <Logo/>
+        <ImageLinkForm/>
       </div>
     );
   }
