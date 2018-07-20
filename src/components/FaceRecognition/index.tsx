@@ -7,7 +7,7 @@ const FaceRecognition = (props: IFaceRecognitionProps) => {
     return (
         <div className="center ma">
             <div className="absolute mt2">
-                <img src={props.imageUrl} width='500 px' height='auto'/>
+                <img id="inputImage" src={props.imageUrl} width="500 px" height="auto"/>
             </div>
         </div>
     );

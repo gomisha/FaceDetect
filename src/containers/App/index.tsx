@@ -31,7 +31,8 @@ class App extends React.Component<any, IAppState> {
         super(props);
         this.state = {
             input: "",
-            imageUrl: ""
+            imageUrl: "",
+            box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 }
         }
     }
     public render() {
@@ -47,8 +48,28 @@ class App extends React.Component<any, IAppState> {
         );
     }
 
+    private calculateFaceLocation = (data: any) => {
+        const clarifaiFaceBox = data.outputs[0].data.regions[0].region_info.bounding_box;
+        console.log("calculateFaceLocation", clarifaiFaceBox);
+        const inputImage = document.getElementById("inputImage") as any;
+        const width = Number(inputImage.width);
+        const height = Number(inputImage.height);
+        console.log("width, height", width + ", " + height);
+        //{top_row: 0.2641042, left_col: 0.17220135, bottom_row: 0.33649856, right_col: 0.24494803}
+        return {
+            leftCol:   clarifaiFaceBox.left_col * width,
+            topRow:    clarifaiFaceBox.top_row * height,
+            rightCol:  width - (clarifaiFaceBox.right_col * width),
+            bottomRow: height - (clarifaiFaceBox.bottom_row * height)
+        };
+    }
+
+    private displayFaceBox = (box) => {
+        console.log("box", box);
+        this.setState(box);
+    }
+
     private onInputChange = (event: any) => {
-        console.log("onInputChange event", event.target.value);
         this.setState({
             input: event.target.value
         });
@@ -58,15 +79,9 @@ class App extends React.Component<any, IAppState> {
         console.log("onButtonSubmit clicked>image URL: " + this.state.imageUrl);
         this.setState({imageUrl: this.state.input})
 
-        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
-            function(response) {
-                console.log("clarifai response", response.outputs[0].data.regions[0].region_info.bounding_box);
-
-            },
-            function(err) {
-            console.log("clarifai error", err);
-            }
-        );
+        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+            .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+            .catch(err => console.log("clarifai error", err));
     }
 }
 
