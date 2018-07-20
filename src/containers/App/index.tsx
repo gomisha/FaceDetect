@@ -2,6 +2,8 @@ import * as React from 'react';
 import Clarifai from 'clarifai';
 import "tachyons";
 import './index.css';
+import IAppState from "./IAppState";
+import FaceRecognition from "../../components/FaceRecognition";
 import Logo from "../../components/Logo";
 import Navigation from "../../components/Navigation";
 import Rank from "../../components/Rank";
@@ -24,11 +26,11 @@ const particlesOptions = {
     }
 };
 
-class App extends React.Component {
+class App extends React.Component<any, IAppState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            input: ""
+            imageURL: ""
         }
     }
     public render() {
@@ -38,24 +40,26 @@ class App extends React.Component {
                 <Particles params={particlesOptions} className="particles"/>
                 <Logo/>
                 <Rank/>
-                <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onClick}/>
+                <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onButtonSubmit}/>
+                <FaceRecognition imageUrl={this.state.imageURL}/>
             </div>
         );
     }
 
     private onInputChange = (event: any) => {
         console.log("onInputChange event", event.target.value);
-        // this.setState({
-        //     foo: event.targetvalue
-        // });
+        this.setState({
+            imageURL: event.target.value
+        });
     }
 
-    private onClick = () => {
-        console.log("onClick clicked");
+    private onButtonSubmit = () => {
+        console.log("onButtonSubmit clicked> image URL: " + this.state.imageURL);
 
-        clarify.models.predict(Clarifai.GENERAL_MODEL, "https://samples.clarifai.com/metro-north.jpg").then(
+        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.imageURL).then(
             function(response) {
-            console.log("clarifai response", response);
+                console.log("clarifai response", response.outputs[0].data.regions[0].region_info.bounding_box);
+
             },
             function(err) {
             console.log("clarifai error", err);
