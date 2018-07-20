@@ -1,10 +1,10 @@
 import * as React from 'react';
 import "tachyons";
 import './App.css';
-import Logo from "./components/logo";
-import Navigation from "./components/navigation";
-import Rank from "./components/rank";
-import ImageLinkForm from "./components/image-link-form";
+import Logo from "./components/Logo";
+import Navigation from "./components/Navigation";
+import Rank from "./components/Rank";
+import ImageLinkForm from "./components/ImageLinkForm";
 import Particles from 'react-particles-js';
 
 const particlesOptions = {
