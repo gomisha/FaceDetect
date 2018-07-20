@@ -30,7 +30,7 @@ class App extends React.Component<any, IAppState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            imageURL: ""
+            imageUrl: ""
         }
     }
     public render() {
@@ -41,22 +41,23 @@ class App extends React.Component<any, IAppState> {
                 <Logo/>
                 <Rank/>
                 <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onButtonSubmit}/>
-                <FaceRecognition imageUrl={this.state.imageURL}/>
+                <FaceRecognition imageUrl={this.state.imageUrl}/>
             </div>
         );
     }
 
     private onInputChange = (event: any) => {
         console.log("onInputChange event", event.target.value);
+        //this.setState(updateImageUrl(event.target.value));
         this.setState({
-            imageURL: event.target.value
+            imageUrl: event.target.value
         });
     }
 
     private onButtonSubmit = () => {
-        console.log("onButtonSubmit clicked> image URL: " + this.state.imageURL);
+        console.log("onButtonSubmit clicked> image URL: " + this.state.imageUrl);
 
-        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.imageURL).then(
+        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.imageUrl).then(
             function(response) {
                 console.log("clarifai response", response.outputs[0].data.regions[0].region_info.bounding_box);
 
