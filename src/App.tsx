@@ -1,19 +1,33 @@
 import * as React from 'react';
+import "tachyons";
 import './App.css';
+import Logo from "./components/logo";
+import Navigation from "./components/navigation";
+import Rank from "./components/rank";
+import ImageLinkForm from "./components/image-link-form";
+import Particles from 'react-particles-js';
 
-import logo from './logo.svg';
+const particlesOptions = {
+    particles: {
+        number: {
+            density: {
+                enable: true,
+                value_area: 800
+            },
+            value: 30
+        }
+    }
+};
 
 class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Navigation/>
+        <Particles params={particlesOptions} className="particles"/>
+        <Logo/>
+        <Rank/>
+        <ImageLinkForm/>
       </div>
     );
   }
