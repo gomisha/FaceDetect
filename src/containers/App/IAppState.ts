@@ -1,5 +1,5 @@
 interface IAppState {
-    // input: string;   //input from text box
+    input: string;   //input from text box
     imageUrl: string; //to send to Clarifai
 }
 

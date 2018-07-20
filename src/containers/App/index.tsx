@@ -30,6 +30,7 @@ class App extends React.Component<any, IAppState> {
     constructor(props: any) {
         super(props);
         this.state = {
+            input: "",
             imageUrl: ""
         }
     }
@@ -48,16 +49,16 @@ class App extends React.Component<any, IAppState> {
 
     private onInputChange = (event: any) => {
         console.log("onInputChange event", event.target.value);
-        //this.setState(updateImageUrl(event.target.value));
         this.setState({
-            imageUrl: event.target.value
+            input: event.target.value
         });
     }
 
     private onButtonSubmit = () => {
-        console.log("onButtonSubmit clicked> image URL: " + this.state.imageUrl);
+        console.log("onButtonSubmit clicked>image URL: " + this.state.imageUrl);
+        this.setState({imageUrl: this.state.input})
 
-        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.imageUrl).then(
+        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
             function(response) {
                 console.log("clarifai response", response.outputs[0].data.regions[0].region_info.bounding_box);
 
