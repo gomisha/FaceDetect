@@ -26,7 +26,7 @@ const SignIn = (props: IProps) => {
 
                             // https://github.com/palantir/tslint-react/issues/96
                             /* tslint:disable:jsx-no-lambda */
-                            onClick={() => props.onRouteChange('signInClicked')} type="submit" value="Sign in"/>
+                            onClick={() => props.onRouteChange('home')} type="submit" value="Sign in"/>
                     </div>
                     <div className="lh-copy mt3">
                         <a href="#0" className="f6 link dim black db">Register</a>

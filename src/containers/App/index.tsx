@@ -39,7 +39,7 @@ class App extends React.Component<any, IStates> {
             box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
             imageUrl: "",
             input: "",
-            route: "signOutClicked"
+            route: "signIn"
         }
     }
     public render() {
@@ -47,7 +47,7 @@ class App extends React.Component<any, IStates> {
             <div className="App">
                 <Navigation onRouteChange={this.onRouteChange}/>
                 { 
-                    (this.state.route === "signOutClicked") ? <SignIn onRouteChange={this.onRouteChange}/> :
+                    (this.state.route === "signIn") ? <SignIn onRouteChange={this.onRouteChange}/> :
                     <div>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
