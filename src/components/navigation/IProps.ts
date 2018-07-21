@@ -1,6 +1,6 @@
 interface IProps {
     onRouteChange: (string) => void;
-    label: string;
+    isSignedIn: boolean;
 }
 
 export default IProps;

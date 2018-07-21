@@ -8,7 +8,7 @@ const Register = (props: IProps) => {
             <main className="pa4 black-80">
                 <div className="measure">
                     <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                        <legend className="f1 fw6 ph0 mh0">Sign In</legend>
+                        <legend className="f1 fw6 ph0 mh0">Register</legend>
                         <div className="mt3">
                             <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                             <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  id="email-address"/>
@@ -22,7 +22,7 @@ const Register = (props: IProps) => {
                         <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                             // https://github.com/palantir/tslint-react/issues/96
                             /* tslint:disable:jsx-no-lambda */
-                            onClick={() => props.onRouteChange('home')} type="submit" value="Sign Up"/>
+                            onClick={() => props.onRouteChange('home')} type="submit" value="Register"/>
                     </div>
                 </div>
             </main>

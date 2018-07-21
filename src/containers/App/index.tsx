@@ -50,7 +50,7 @@ class App extends React.Component<any, IStates> {
             case "signIn":
                 element = 
                     <div className="App">
-                        <Navigation onRouteChange={this.onRouteChange} label="Sign In"/>
+                        <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
                         <SignIn onRouteChange={this.onRouteChange} onRegister={this.onRegister}/>;
@@ -59,7 +59,7 @@ class App extends React.Component<any, IStates> {
             case "register":
                 element = 
                     <div className="App">
-                        <Navigation onRouteChange={this.onRouteChange} label="Sign In"/>
+                        <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
                         <Register onRouteChange={this.onRouteChange} />;
@@ -68,7 +68,7 @@ class App extends React.Component<any, IStates> {
             case "home":
                 element = 
                     <div className="App">
-                        <Navigation onRouteChange={this.onRouteChange} label="Sign Out"/>
+                        <Navigation onRouteChange={this.onRouteChange} isSignedIn={true}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
                         <Rank/>
