@@ -43,7 +43,7 @@ class App extends React.Component<any, IAppState> {
                 <Logo/>
                 <Rank/>
                 <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onButtonSubmit}/>
-                <FaceRecognition imageUrl={this.state.imageUrl}/>
+                <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
             </div>
         );
     }
@@ -66,7 +66,7 @@ class App extends React.Component<any, IAppState> {
 
     private displayFaceBox = (box) => {
         console.log("box", box);
-        this.setState(box);
+        this.setState({box});
     }
 
     private onInputChange = (event: any) => {
