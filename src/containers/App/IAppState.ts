@@ -7,6 +7,7 @@ interface IAppState {
         bottomRow: number;
         rightCol: number;
     } // return face co-ordinates
+    route: string;
 }
 
 export default IAppState;
