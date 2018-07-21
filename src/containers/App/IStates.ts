@@ -1,4 +1,4 @@
-interface IAppState {
+interface IStates {
     input: string;   // input from text box
     imageUrl: string; // to send to Clarifai
     box: {
@@ -10,4 +10,4 @@ interface IAppState {
     route: string;
 }
 
-export default IAppState;
+export default IStates;

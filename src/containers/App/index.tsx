@@ -6,7 +6,7 @@ import Particles from 'react-particles-js';
 import "tachyons";
 
 import './index.css';
-import IAppState from "./IAppState";
+import IStates from "./IStates";
 
 // App components
 import FaceRecognition from "../../components/FaceRecognition";
@@ -32,7 +32,7 @@ const particlesOptions = {
     }
 };
 
-class App extends React.Component<any, IAppState> {
+class App extends React.Component<any, IStates> {
     constructor(props: any) {
         super(props);
         this.state = {

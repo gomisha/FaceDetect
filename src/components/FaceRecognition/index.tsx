@@ -1,8 +1,8 @@
 import * as React from 'react';
-import IFaceRecognitionProps from './IFaceRecognitionProps';
+import IProps from './IProps';
 import "./index.css";
 
-const FaceRecognition = (props: IFaceRecognitionProps) => {
+const FaceRecognition = (props: IProps) => {
     return (
         <div className="center ma">
             <div className="absolute mt2">

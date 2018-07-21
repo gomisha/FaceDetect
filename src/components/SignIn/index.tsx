@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import ISignInProps from "./ISignInProps";
+import IProps from "./IProps";
 
 // from http://tachyons.io/components/forms/sign-in/index.html
 // from http://tachyons.io/components/cards/product-card/index.html
 
-const SignIn = (props: ISignInProps) => {
+const SignIn = (props: IProps) => {
     return (
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
             <main className="pa4 black-80">

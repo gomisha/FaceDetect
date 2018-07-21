@@ -1,6 +1,6 @@
-interface IImageLinkFormProps {
+interface IProps {
     onInputChange: (event: any) => void,
     onClick: () => void
 }
 
-export default IImageLinkFormProps;
+export default IProps;
