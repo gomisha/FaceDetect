@@ -45,11 +45,11 @@ class App extends React.Component<any, IAppState> {
     public render() {
         return (
             <div className="App">
-                <Navigation/>
+                <Navigation onRouteChange={this.onRouteChange}/>
                 { 
-                    (this.state.route === "signIn") ? <SignIn/> :
+                    (this.state.route === "signIn") ? <SignIn onRouteChange={this.onRouteChange}/> :
                     <div>
-                        <Particles params={particlesOptions} className="particles"/>                        
+                        <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
                         <Rank/>
                         <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onButtonSubmit}/>
@@ -88,6 +88,19 @@ class App extends React.Component<any, IAppState> {
 
         clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
             .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+    }
+
+    private onRouteChange = () => {
+        console.log("onRouteChange");
+
+        //signed in, so need to sign out
+        if(this.state.route === "signedIn") {
+            this.setState({route: "signIn"})
+        }
+        //signed out, so need to sign in
+        else {
+            this.setState({route: "signedIn"})
+        }
     }
 }
 
