@@ -14,6 +14,7 @@ import ImageLinkForm from "../../components/ImageLinkForm";
 import Logo from "../../components/Logo";
 import Navigation from "../../components/Navigation";
 import Rank from "../../components/Rank";
+import Register from "../../components/Register";
 import SignIn from "../../components/SignIn";
 
 const clarify = new Clarifai.App({
@@ -42,22 +43,44 @@ class App extends React.Component<any, IStates> {
             route: "signIn"
         }
     }
+
     public render() {
-        return (
-            <div className="App">
-                <Navigation onRouteChange={this.onRouteChange}/>
-                { 
-                    (this.state.route === "signIn") ? <SignIn onRouteChange={this.onRouteChange}/> :
-                    <div>
+        let element: JSX.Element;
+        switch(this.state.route) {
+            case "signIn":
+                element = 
+                    <div className="App">
+                        <Navigation onRouteChange={this.onRouteChange} label="Sign In"/>
+                        <Particles params={particlesOptions} className="particles"/>
+                        <Logo/>
+                        <SignIn onRouteChange={this.onRouteChange} onRegister={this.onRegister}/>;
+                    </div>
+                break;
+            case "register":
+                element = 
+                    <div className="App">
+                        <Navigation onRouteChange={this.onRouteChange} label="Sign In"/>
+                        <Particles params={particlesOptions} className="particles"/>
+                        <Logo/>
+                        <Register onRouteChange={this.onRouteChange} />;
+                    </div>
+                break;
+            case "home":
+                element = 
+                    <div className="App">
+                        <Navigation onRouteChange={this.onRouteChange} label="Sign Out"/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
                         <Rank/>
                         <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onButtonSubmit}/>
                         <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
-                    </div>
-                }
-            </div>
-        );
+                    </div>;
+                break;
+            default:
+                throw Error("bad route:" + this.state.route);
+        }
+
+        return element;
     }
 
     private calculateFaceLocation = (data: any) => {
@@ -95,6 +118,10 @@ class App extends React.Component<any, IStates> {
         console.log("onRouteChange>route=");
         console.log(routeParam);
         this.setState({route: routeParam})
+    }
+
+    private onRegister = () => {
+        console.log("onRegister");
     }
 }
 

@@ -9,7 +9,7 @@ const Navigation = (props: IProps) => {
 
                 // https://github.com/palantir/tslint-react/issues/96
                 /* tslint:disable:jsx-no-lambda */
-                onClick={() => props.onRouteChange("signIn")}>Sign Out</p>
+                onClick={() => props.onRouteChange("signIn")}>{props.label}</p>
         </nav>
     );
 };
