@@ -39,7 +39,7 @@ class App extends React.Component<any, IStates> {
             box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
             imageUrl: "",
             input: "",
-            route: "signIn"
+            route: "signOutClicked"
         }
     }
     public render() {
@@ -47,7 +47,7 @@ class App extends React.Component<any, IStates> {
             <div className="App">
                 <Navigation onRouteChange={this.onRouteChange}/>
                 { 
-                    (this.state.route === "signIn") ? <SignIn onRouteChange={this.onRouteChange}/> :
+                    (this.state.route === "signOutClicked") ? <SignIn onRouteChange={this.onRouteChange}/> :
                     <div>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
@@ -90,17 +90,11 @@ class App extends React.Component<any, IStates> {
             .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
     }
 
-    private onRouteChange = () => {
-        console.log("onRouteChange");
-
-        //signed in, so need to sign out
-        if(this.state.route === "signedIn") {
-            this.setState({route: "signIn"})
-        }
-        //signed out, so need to sign in
-        else {
-            this.setState({route: "signedIn"})
-        }
+    // handles state for signing in/out
+    private onRouteChange = (routeParam: string) => {
+        console.log("onRouteChange>route=");
+        console.log(routeParam);
+        this.setState({route: routeParam})
     }
 }
 
