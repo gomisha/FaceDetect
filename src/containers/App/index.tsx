@@ -53,7 +53,7 @@ class App extends React.Component<any, IStates> {
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
-                        <SignIn onRouteChange={this.onRouteChange} onRegister={this.onRegister}/>
+                        <SignIn onRouteChange={this.onRouteChange}/>
                     </div>
                 break;
             case "register":
@@ -115,13 +115,7 @@ class App extends React.Component<any, IStates> {
 
     // handles state for signing in/out
     private onRouteChange = (routeParam: string) => {
-        console.log("onRouteChange>route=");
-        console.log(routeParam);
         this.setState({route: routeParam})
-    }
-
-    private onRegister = () => {
-        console.log("onRegister");
     }
 }
 

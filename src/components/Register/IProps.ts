@@ -1,5 +1,5 @@
 interface IProps {
-    onRouteChange: (string) => void;
+    onRouteChange: (route: string) => void;
 }
 
 export default IProps;
