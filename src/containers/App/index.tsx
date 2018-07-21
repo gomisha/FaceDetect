@@ -1,14 +1,21 @@
 import * as React from 'react';
+
+// 3rd party libs
 import Clarifai from 'clarifai';
+import Particles from 'react-particles-js';
 import "tachyons";
+
 import './index.css';
 import IAppState from "./IAppState";
+
+// App components
 import FaceRecognition from "../../components/FaceRecognition";
+import ImageLinkForm from "../../components/ImageLinkForm";
 import Logo from "../../components/Logo";
 import Navigation from "../../components/Navigation";
 import Rank from "../../components/Rank";
-import ImageLinkForm from "../../components/ImageLinkForm";
-import Particles from 'react-particles-js';
+import SignIn from "../../components/SignIn";
+
 
 const clarify = new Clarifai.App({
     apiKey: 'd8356d92cf6c41f3a7e2b499e23baa20'
@@ -39,6 +46,7 @@ class App extends React.Component<any, IAppState> {
         return (
             <div className="App">
                 <Navigation/>
+                <SignIn/>
                 <Particles params={particlesOptions} className="particles"/>
                 <Logo/>
                 <Rank/>
@@ -58,8 +66,6 @@ class App extends React.Component<any, IAppState> {
             leftCol:   clarifaiFaceBox.left_col * width,
             rightCol:  width - (clarifaiFaceBox.right_col * width),
             topRow:    clarifaiFaceBox.top_row * height
-            
-            
         };
     }
 
