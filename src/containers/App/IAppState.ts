@@ -1,12 +1,12 @@
 interface IAppState {
-    input: string;   //input from text box
-    imageUrl: string; //to send to Clarifai
+    input: string;   // input from text box
+    imageUrl: string; // to send to Clarifai
     box: {
         topRow: number;
         leftCol: number;
         bottomRow: number;
         rightCol: number;
-    } //return face co-ordinates
+    } // return face co-ordinates
 }
 
 export default IAppState;

@@ -3,8 +3,6 @@ import IFaceRecognitionProps from './IFaceRecognitionProps';
 import "./index.css";
 
 const FaceRecognition = (props: IFaceRecognitionProps) => {
-    console.log("FaceRecognition>props.box.topRow=" + props.box.topRow);
-
     return (
         <div className="center ma">
             <div className="absolute mt2">
