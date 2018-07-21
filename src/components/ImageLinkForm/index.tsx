@@ -1,8 +1,8 @@
 import * as React from 'react';
 import "./index.css";
-import IImageLinkFormProps from "./IImageLinkFormProps";
+import IProps from "./IProps";
 
-const ImageLinkForm = (props: IImageLinkFormProps) => {
+const ImageLinkForm = (props: IProps) => {
     return (
         <div>
             <p className="f3">
