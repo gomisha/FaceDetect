@@ -15,7 +15,7 @@ import Logo from "../../components/Logo";
 import Navigation from "../../components/Navigation";
 import Rank from "../../components/Rank";
 import Register from "../../components/Register";
-import SignIn from "../../components/SignIn";
+import SignIn from "../SignIn";
 
 const clarify = new Clarifai.App({
     apiKey: 'd8356d92cf6c41f3a7e2b499e23baa20'
