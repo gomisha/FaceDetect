@@ -82,9 +82,10 @@ class Register extends React.Component<IProps, IState> {
 
         fetch(config.ENDPOINT_POST_REGISTER, config.JSON_POST_REQUEST)
             .then(response => response.json())
-            .then(data => {
+            .then(user => {
                 this.props.onRouteChange('home');
-                console.log("data (after register):", data);
+                this.props.loadUser(user);
+                console.log("user (after register22233):", user);
             })
     }
 }

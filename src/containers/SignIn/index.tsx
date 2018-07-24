@@ -69,11 +69,17 @@ class SignIn extends React.Component<IProps, IState> {
         });
 
         fetch(config.ENDPOINT_POST_SIGNIN, config.JSON_POST_REQUEST)
-            .then(response => response.json())
+            .then(response => { 
+                if(response.status != 200) throw new Error("Incorrect login");
+
+                return response.json()
+            })
             .then(data => {
-                if(data.toString().includes("success")) {
-                    this.props.onRouteChange('home');
-                }
+                console.log("onSubmitSignIn>data1=" + data);
+                this.props.onRouteChange('home');
+                this.props.loadUser(data);
+            }).catch(error => {
+                console.log("error signing in: " + error);
             })
     }
 

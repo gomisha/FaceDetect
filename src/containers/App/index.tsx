@@ -19,6 +19,9 @@ import Rank from "../../components/Rank";
 import Register from "../Register";
 import SignIn from "../SignIn";
 
+//entity objects
+import User from "./User";
+
 const clarify = new Clarifai.App({
     apiKey: 'd8356d92cf6c41f3a7e2b499e23baa20'
 });
@@ -42,7 +45,8 @@ class App extends React.Component<any, IStates> {
             box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
             imageUrl: "",
             input: "",
-            route: "signIn"
+            route: "signIn",
+            user: { id: "", name: "", email: "", entries: 0, joined: ""}
         }
     }
 
@@ -55,7 +59,7 @@ class App extends React.Component<any, IStates> {
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
-                        <SignIn onRouteChange={this.onRouteChange}/>
+                        <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                     </div>
                 break;
             case "register":
@@ -64,7 +68,7 @@ class App extends React.Component<any, IStates> {
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
-                        <Register onRouteChange={this.onRouteChange} />
+                        <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
                     </div>
                 break;
             case "home":
@@ -73,8 +77,8 @@ class App extends React.Component<any, IStates> {
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={true}/>
                         <Particles params={particlesOptions} className="particles"/>
                         <Logo/>
-                        <Rank/>
-                        <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onButtonSubmit}/>
+                        <Rank user={this.state.user}/>
+                        <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onPictureSubmit}/>
                         <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>
                     </div>;
                 break;
@@ -108,7 +112,7 @@ class App extends React.Component<any, IStates> {
         });
     }
 
-    private onButtonSubmit = () => {
+    private onPictureSubmit = () => {
         this.setState({imageUrl: this.state.input})
 
         clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
@@ -118,6 +122,10 @@ class App extends React.Component<any, IStates> {
     // handles state for signing in/out
     private onRouteChange = (routeParam: string) => {
         this.setState({route: routeParam})
+    }
+
+    private loadUser = (user: User) => {
+        this.setState({user: user});
     }
 }
 
