@@ -8,13 +8,15 @@ import "tachyons";
 import './index.css';
 import IStates from "./IStates";
 
-// App components
+// components
 import FaceRecognition from "../../components/FaceRecognition";
 import ImageLinkForm from "../../components/ImageLinkForm";
 import Logo from "../../components/Logo";
 import Navigation from "../../components/Navigation";
 import Rank from "../../components/Rank";
-import Register from "../../components/Register";
+
+// containers
+import Register from "../Register";
 import SignIn from "../SignIn";
 
 const clarify = new Clarifai.App({
