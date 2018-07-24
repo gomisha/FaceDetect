@@ -19,3 +19,9 @@ export const JSON_POST_REQUEST = {
     headers: { "Content-Type": "application/json"},
     body: ""
 }
+
+export const JSON_PUT_REQUEST = {
+    method: "put",
+    headers: { "Content-Type": "application/json"},
+    body: ""
+}

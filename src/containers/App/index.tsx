@@ -22,6 +22,9 @@ import SignIn from "../SignIn";
 //entity objects
 import User from "./User";
 
+//config
+import * as config from "../../config";
+
 const clarify = new Clarifai.App({
     apiKey: 'd8356d92cf6c41f3a7e2b499e23baa20'
 });
@@ -117,6 +120,26 @@ class App extends React.Component<any, IStates> {
 
         clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
             .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+
+        console.log("App>onPictureSubmit>this.state.user.id=", this.state.user.id);
+
+        config.JSON_PUT_REQUEST.body = JSON.stringify({
+            id: this.state.user.id
+        });
+
+        //call server to update user stats
+        fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
+            .then(response => { 
+                if(response.status != 200) throw new Error("Incorrect put image request");
+
+                return response.json()
+            })
+            .then(data => {
+                console.log("onPictureSubmit>data1=" + data);
+                this.setState({user: data})
+            }).catch(error => {
+                console.log("error calling put image: " + error);
+            })
     }
 
     // handles state for signing in/out
