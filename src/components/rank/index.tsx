@@ -6,7 +6,7 @@ const Rank = (props: IProps) => {
     return (
         <div>
             <div className="white f3">
-                {props.user.name} {", your current entry count is..."}
+                {`${props.user.name}, you checked this many images...`}
             </div>
             <div className="white f1">
                 {props.user.entries}
