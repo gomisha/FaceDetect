@@ -3,6 +3,8 @@ import * as React from 'react';
 import IProps from "./IProps";
 import IState from "./IState";
 
+import * as config from "../../config";
+
 // CSS from:
 // http://tachyons.io/components/forms/sign-in/index.html
 // http://tachyons.io/components/cards/product-card/index.html
@@ -61,26 +63,18 @@ class SignIn extends React.Component<IProps, IState> {
     }
 
     private onSubmitSignIn = (): void => {
-        console.log("onSubmitSignIn", this.state);
-        
-        fetch("http://localhost:3000/signin", {
-            method: "post",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
-            })})
+        config.JSON_POST_REQUEST.body = JSON.stringify({
+            email: this.state.email,
+            password: this.state.password
+        });
+
+        fetch(config.ENDPOINT_POST_SIGNIN, config.JSON_POST_REQUEST)
             .then(response => response.json())
             .then(data => {
-                console.log("onSubmitSignIn>data" + data);
                 if(data.toString().includes("success")) {
                     this.props.onRouteChange('home');
                 }
-                else {
-                    console.log("wrong user/password");
-                }
             })
-
     }
 
     private onEmailChange = (event: any):void => {
