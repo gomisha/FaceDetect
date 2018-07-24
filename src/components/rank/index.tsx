@@ -1,14 +1,17 @@
 import * as React from 'react';
 
-const Rank = () => {
+import IProps from "./IProps";
+
+const Rank = (props: IProps) => {
     return (
         <div>
             <div className="white f3">
-                {"Misha, your current rank is..."}
+                {`${props.user.name}, you checked this many images...`}
             </div>
             <div className="white f1">
-                {"#2"}
+                {props.user.entries}
             </div>
+
         </div>
     );
 };
