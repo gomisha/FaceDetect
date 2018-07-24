@@ -19,8 +19,6 @@ class SignIn extends React.Component<IProps, IState> {
     }
 
     public render() {
-        console.log("render>this.state=" + this.state);
-
         return (
             <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
                 <main className="pa4 black-80">
@@ -75,11 +73,10 @@ class SignIn extends React.Component<IProps, IState> {
                 return response.json()
             })
             .then(data => {
-                console.log("onSubmitSignIn>data1=" + data);
                 this.props.onRouteChange('home');
                 this.props.loadUser(data);
             }).catch(error => {
-                console.log("error signing in: " + error);
+                throw new Error("error signing in: " + error);
             })
     }
 

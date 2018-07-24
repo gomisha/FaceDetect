@@ -19,10 +19,10 @@ import Rank from "../../components/Rank";
 import Register from "../Register";
 import SignIn from "../SignIn";
 
-//entity objects
+// entity objects
 import User from "./User";
 
-//config
+// config
 import * as config from "../../config";
 
 const clarify = new Clarifai.App({
@@ -118,37 +118,29 @@ class App extends React.Component<any, IStates> {
     private onPictureSubmit = () => {
         this.setState({imageUrl: this.state.input})
 
-        let pictureAnalyzed = false;
-
         clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
             .then(response => {
                 if(response) {
                     this.displayFaceBox(this.calculateFaceLocation(response))
-                    pictureAnalyzed = true;
+
+                    config.JSON_PUT_REQUEST.body = JSON.stringify({
+                        id: this.state.user.id
+                    });
+            
+                    // call server to update user stats
+                    fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
+                        .then(response => { 
+                            if(response.status !== 200) { 
+                                throw new Error("Incorrect put image request"); 
+                            }
+            
+                            return response.json()
+                        })
+                        .then(data => {
+                            this.setState({user: data})
+                        })
                 }
             })
-
-        console.log("App>onPictureSubmit>this.state.user.id=", this.state.user.id);
-
-        if(pictureAnalyzed) {
-            config.JSON_PUT_REQUEST.body = JSON.stringify({
-                id: this.state.user.id
-            });
-    
-            //call server to update user stats
-            fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-                .then(response => { 
-                    if(response.status != 200) throw new Error("Incorrect put image request");
-    
-                    return response.json()
-                })
-                .then(data => {
-                    console.log("onPictureSubmit>data1=" + data);
-                    this.setState({user: data})
-                }).catch(error => {
-                    console.log("error calling put image: " + error);
-                })
-        }
     }
 
     // handles state for signing in/out
@@ -157,7 +149,7 @@ class App extends React.Component<any, IStates> {
     }
 
     private loadUser = (user: User) => {
-        this.setState({user: user});
+        this.setState({user});
     }
 }
 
