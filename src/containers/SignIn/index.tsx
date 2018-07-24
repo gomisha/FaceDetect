@@ -78,7 +78,6 @@ class SignIn extends React.Component<IProps, IState> {
     }
 
     private onEmailChange = (event: any):void => {
-        console.log("onEmailChange>this.state=" + this.state);
         this.setState({email: event.target.value})
     }
 
