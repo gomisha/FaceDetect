@@ -118,28 +118,37 @@ class App extends React.Component<any, IStates> {
     private onPictureSubmit = () => {
         this.setState({imageUrl: this.state.input})
 
+        let pictureAnalyzed = false;
+
         clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-            .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+            .then(response => {
+                if(response) {
+                    this.displayFaceBox(this.calculateFaceLocation(response))
+                    pictureAnalyzed = true;
+                }
+            })
 
         console.log("App>onPictureSubmit>this.state.user.id=", this.state.user.id);
 
-        config.JSON_PUT_REQUEST.body = JSON.stringify({
-            id: this.state.user.id
-        });
-
-        //call server to update user stats
-        fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-            .then(response => { 
-                if(response.status != 200) throw new Error("Incorrect put image request");
-
-                return response.json()
-            })
-            .then(data => {
-                console.log("onPictureSubmit>data1=" + data);
-                this.setState({user: data})
-            }).catch(error => {
-                console.log("error calling put image: " + error);
-            })
+        if(pictureAnalyzed) {
+            config.JSON_PUT_REQUEST.body = JSON.stringify({
+                id: this.state.user.id
+            });
+    
+            //call server to update user stats
+            fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
+                .then(response => { 
+                    if(response.status != 200) throw new Error("Incorrect put image request");
+    
+                    return response.json()
+                })
+                .then(data => {
+                    console.log("onPictureSubmit>data1=" + data);
+                    this.setState({user: data})
+                }).catch(error => {
+                    console.log("error calling put image: " + error);
+                })
+        }
     }
 
     // handles state for signing in/out
