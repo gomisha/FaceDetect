@@ -9,8 +9,8 @@ class Register extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            name: "",
             email: "",
+            name: "",
             password: ""
         };
     }
@@ -75,8 +75,8 @@ class Register extends React.Component<IProps, IState> {
 
     private onSubmitRegister = (): void => {
         config.JSON_POST_REQUEST.body = JSON.stringify({
-            name: this.state.name,
             email: this.state.email,
+            name: this.state.name,
             password: this.state.password
         });
 

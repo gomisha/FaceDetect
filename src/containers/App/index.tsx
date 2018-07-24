@@ -129,12 +129,11 @@ class App extends React.Component<any, IStates> {
             
                     // call server to update user stats
                     fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-                        .then(response => { 
-                            if(response.status !== 200) { 
+                        .then(response2 => { 
+                            if(response2.status !== 200) { 
                                 throw new Error("Incorrect put image request"); 
                             }
-            
-                            return response.json()
+                            return response2.json()
                         })
                         .then(data => {
                             this.setState({user: data})

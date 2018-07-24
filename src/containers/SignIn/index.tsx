@@ -68,7 +68,7 @@ class SignIn extends React.Component<IProps, IState> {
 
         fetch(config.ENDPOINT_POST_SIGNIN, config.JSON_POST_REQUEST)
             .then(response => { 
-                if(response.status != 200) throw new Error("Incorrect login");
+                if(response.status !== 200) { throw new Error("Incorrect login"); }
 
                 return response.json()
             })
