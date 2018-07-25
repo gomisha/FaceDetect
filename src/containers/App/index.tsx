@@ -135,8 +135,12 @@ class App extends React.Component<any, IStates> {
                             }
                             return response2.json()
                         })
-                        .then(data => {
-                            this.setState({user: data})
+                        .then(entries => {
+                            let user = this.state.user;
+                            user.entries = entries;
+                            this.setState(
+                                {user}
+                            )
                         })
                 }
             })
