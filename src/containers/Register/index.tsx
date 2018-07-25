@@ -81,11 +81,12 @@ class Register extends React.Component<IProps, IState> {
         });
 
         fetch(config.ENDPOINT_POST_REGISTER, config.JSON_POST_REQUEST)
-            .then(response => response.json())
-            .then(user => {
-                this.props.onRouteChange('home');
-                this.props.loadUser(user);
-            })
+            .then(response => {
+                if(response.status === 200) {
+                    response.json().then(user => {
+                        this.props.onRouteChange('home');
+                        this.props.loadUser(user);
+                    })}})
     }
 }
 export default Register;
