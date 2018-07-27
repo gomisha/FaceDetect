@@ -115,25 +115,29 @@ class App extends React.Component<any, IState> {
 
                     config.JSON_PUT_REQUEST.body = JSON.stringify({
                         id: this.state.user.id
-                    });
-            
+                    })
+
                     // call server to update user stats
-                    fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-                        .then(response2 => { 
-                            if(response2.status !== 200) { 
-                                throw new Error("Incorrect put image request"); 
-                            }
-                            return response2.json()
-                        })
-                        .then(entries => {
-                            let user = this.state.user;
-                            user.entries = entries;
-                            this.setState(
-                                {user}
-                            )
-                        })
+                    return fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
                 }
+                throw new Error("failed to fetch face API")
             })
+            .then(response2 => { 
+                if(response2.status !== 200) { 
+                    throw new Error("Incorrect put image request"); 
+                }
+                return response2.json()
+            }).then(entries => {
+                let user = this.state.user;
+                user.entries = entries;
+                this.setState(
+                    {user}
+                )
+            }).catch(Error => {
+                console.log("error getting face: " + Error);
+            }) 
+                
+            
     }
 
     // handles state for signing in/out
