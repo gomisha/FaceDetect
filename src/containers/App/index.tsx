@@ -110,21 +110,21 @@ class App extends React.Component<any, IState> {
 
         // call server to find face, update user stats
         fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-        .then(response => {
-            if(response.status != 200) { throw new Error("error finding face") }
-            return response.json()
-        }).then(response2 => {
-            let user = this.state.user;
+            .then(response => {
+                if(response.status != 200) { throw new Error("error finding face") }
+                return response.json()
+            }).then(response2 => {
+                let user = this.state.user;
 
-            //update user entry count to display
-            user.entries = response2.entries
+                //update user entry count to display
+                user.entries = response2.entries
 
-            //extract face location data so can display box around face
-            this.displayFaceBox(this.calculateFaceLocation(response2.data))
-            this.setState(
-                {user}
-            )
-        }).catch(Error => { console.log("error getting face: " + Error) })
+                //extract face location data so can display box around face
+                this.displayFaceBox(this.calculateFaceLocation(response2.data))
+                this.setState(
+                    {user}
+                )
+            }).catch(error => { console.log("error getting face: " + error) })
     }
 
     // handles state for signing in/out
