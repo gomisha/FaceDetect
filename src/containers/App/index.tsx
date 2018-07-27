@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 // 3rd party libs
-import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import "tachyons";
 
@@ -24,10 +23,6 @@ import User from "./User";
 
 // config
 import * as config from "../../config";
-
-const clarify = new Clarifai.App({
-    apiKey: config.CLARIFAI_KEY
-});
 
 let initialState: IState = {
     box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
@@ -108,36 +103,28 @@ class App extends React.Component<any, IState> {
     private onPictureSubmit = () => {
         this.setState({imageUrl: this.state.input})
 
-        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-            .then(response => {
-                if(response) {
-                    this.displayFaceBox(this.calculateFaceLocation(response))
+        config.JSON_PUT_REQUEST.body = JSON.stringify({
+            id: this.state.user.id,
+            imageURL: this.state.input
+        })
 
-                    config.JSON_PUT_REQUEST.body = JSON.stringify({
-                        id: this.state.user.id
-                    })
+        // call server to find face, update user stats
+        fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
+        .then(response => {
+            if(response.status != 200) { throw new Error("error finding face") }
+            return response.json()
+        }).then(response2 => {
+            let user = this.state.user;
 
-                    // call server to update user stats
-                    return fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-                }
-                throw new Error("failed to fetch face API")
-            })
-            .then(response2 => { 
-                if(response2.status !== 200) { 
-                    throw new Error("Incorrect put image request"); 
-                }
-                return response2.json()
-            }).then(entries => {
-                let user = this.state.user;
-                user.entries = entries;
-                this.setState(
-                    {user}
-                )
-            }).catch(Error => {
-                console.log("error getting face: " + Error);
-            }) 
-                
-            
+            //update user entry count to display
+            user.entries = response2.entries
+
+            //extract face location data so can display box around face
+            this.displayFaceBox(this.calculateFaceLocation(response2.data))
+            this.setState(
+                {user}
+            )
+        }).catch(Error => { console.log("error getting face: " + Error) })
     }
 
     // handles state for signing in/out

@@ -28,10 +28,6 @@ export const JSON_PUT_REQUEST = {
     body: ""
 }
 
-//Clarifai
-
-export const CLARIFAI_KEY = "d8356d92cf6c41f3a7e2b499e23baa20"
-
 //Particles background
 
 export const particlesOptions = {
