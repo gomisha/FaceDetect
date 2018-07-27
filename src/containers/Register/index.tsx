@@ -86,7 +86,9 @@ class Register extends React.Component<IProps, IState> {
                     response.json().then(user => {
                         this.props.onRouteChange('home');
                         this.props.loadUser(user);
-                    })}})
+                    })
+                }
+            })
     }
 }
 export default Register;
