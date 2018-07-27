@@ -64,11 +64,11 @@ class SignIn extends React.Component<IProps, IState> {
         config.JSON_POST_REQUEST.body = JSON.stringify({
             email: this.state.email,
             password: this.state.password
-        });
+        })
 
         fetch(config.ENDPOINT_POST_SIGNIN, config.JSON_POST_REQUEST)
             .then(response => { 
-                if(response.status !== 200) { throw new Error("Incorrect login"); }
+                if(response.status !== 200) { throw new Error("Incorrect login") }
 
                 return response.json()
             })
@@ -76,7 +76,8 @@ class SignIn extends React.Component<IProps, IState> {
                 this.props.onRouteChange('home');
                 this.props.loadUser(data);
             }).catch(error => {
-                throw new Error("error signing in: " + error);
+                //ignore error for now - won't authenticate and will just stay on login screen
+                //better than throwing error to user
             })
     }
 
