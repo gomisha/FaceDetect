@@ -1,12 +1,11 @@
 import * as React from 'react';
 
 // 3rd party libs
-import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import "tachyons";
 
 import './index.css';
-import IStates from "./IStates";
+import IState from "./IStates";
 
 // components
 import FaceRecognition from "../../components/FaceRecognition";
@@ -25,60 +24,46 @@ import User from "./User";
 // config
 import * as config from "../../config";
 
-const clarify = new Clarifai.App({
-    apiKey: 'd8356d92cf6c41f3a7e2b499e23baa20'
-});
+let initialState: IState = {
+    box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
+    imageUrl: "",
+    input: "",
+    route: config.ROUTE_SIGNIN,
+    user: { id: "", name: "", email: "", entries: 0, joined: ""}
+}
 
-const particlesOptions = {
-    particles: {
-        number: {
-            density: {
-                enable: true,
-                value_area: 800
-            },
-            value: 30
-        }
-    }
-};
-
-class App extends React.Component<any, IStates> {
+class App extends React.Component<any, IState> {
     constructor(props: any) {
-        super(props);
-        this.state = {
-            box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
-            imageUrl: "",
-            input: "",
-            route: "signIn",
-            user: { id: "", name: "", email: "", entries: 0, joined: ""}
-        }
+        super(props)
+        this.state = initialState
     }
 
     public render() {
         let element: JSX.Element;
         switch(this.state.route) {
-            case "signIn":
+            case config.ROUTE_SIGNIN:
                 element = 
                     <div className="App">
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
-                        <Particles params={particlesOptions} className="particles"/>
+                        <Particles params={config.particlesOptions} className="particles"/>
                         <Logo/>
                         <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                     </div>
                 break;
-            case "register":
+            case config.ROUTE_REGISTER:
                 element = 
                     <div className="App">
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
-                        <Particles params={particlesOptions} className="particles"/>
+                        <Particles params={config.particlesOptions} className="particles"/>
                         <Logo/>
                         <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
                     </div>
                 break;
-            case "home":
+            case config.ROUTE_HOME:
                 element = 
                     <div className="App">
                         <Navigation onRouteChange={this.onRouteChange} isSignedIn={true}/>
-                        <Particles params={particlesOptions} className="particles"/>
+                        <Particles params={config.particlesOptions} className="particles"/>
                         <Logo/>
                         <Rank user={this.state.user}/>
                         <ImageLinkForm onInputChange={this.onInputChange} onClick={this.onPictureSubmit}/>
@@ -118,37 +103,43 @@ class App extends React.Component<any, IStates> {
     private onPictureSubmit = () => {
         this.setState({imageUrl: this.state.input})
 
-        clarify.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-            .then(response => {
-                if(response) {
-                    this.displayFaceBox(this.calculateFaceLocation(response))
+        config.JSON_PUT_REQUEST.body = JSON.stringify({
+            id: this.state.user.id,
+            imageURL: this.state.input
+        })
 
-                    config.JSON_PUT_REQUEST.body = JSON.stringify({
-                        id: this.state.user.id
-                    });
-            
-                    // call server to update user stats
-                    fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
-                        .then(response2 => { 
-                            if(response2.status !== 200) { 
-                                throw new Error("Incorrect put image request"); 
-                            }
-                            return response2.json()
-                        })
-                        .then(entries => {
-                            let user = this.state.user;
-                            user.entries = entries;
-                            this.setState(
-                                {user}
-                            )
-                        })
-                }
-            })
+        // call server to find face, update user stats
+        fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
+            .then(response => {
+                if(response.status != 200) { throw new Error("error finding face") }
+                return response.json()
+            }).then(response2 => {
+                let user = this.state.user;
+
+                //update user entry count to display
+                user.entries = response2.entries
+
+                //extract face location data so can display box around face
+                this.displayFaceBox(this.calculateFaceLocation(response2.data))
+                this.setState(
+                    {user}
+                )
+            }).catch(error => { console.log("error getting face: " + error) })
     }
 
     // handles state for signing in/out
     private onRouteChange = (routeParam: string) => {
         this.setState({route: routeParam})
+
+        // removes any images from previous logins by other users
+        if(routeParam !== config.ROUTE_HOME) {
+            this.setState(initialState)
+        }
+
+        //since initial state is set to signin route, need to update it when click register
+        if(routeParam === config.ROUTE_REGISTER) {
+            this.setState({route: config.ROUTE_REGISTER})
+        }
     }
 
     private loadUser = (user: User) => {
