@@ -10,7 +10,7 @@ import IState from "./IStates";
 // components
 import FaceRecognition from "../../components/FaceRecognition";
 import ImageLinkForm from "../../components/ImageLinkForm";
-import Logo from "../../components/Logo";
+import Logo from "../../components/logo";
 import Navigation from "../../components/Navigation";
 import Rank from "../../components/Rank";
 
