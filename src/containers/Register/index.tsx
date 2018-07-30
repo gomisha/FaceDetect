@@ -92,8 +92,8 @@ class Register extends React.Component<IProps, IState> {
                     throw new Error("Error during register")
                 }
             }).catch(error => {
-                //ignore error for now - won't register and will just stay on login screen
-                //better than throwing error to user
+                // ignore error for now - won't register and will just stay on login screen
+                // better than throwing error to user
             })
     }
 }

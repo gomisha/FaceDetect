@@ -19,12 +19,12 @@ import Register from "../Register";
 import SignIn from "../SignIn";
 
 // entity objects
-import User from "./User";
+import IUser from "./User";
 
 // config
 import * as config from "../../config";
 
-let initialState: IState = {
+const initialState: IState = {
     box: { topRow: 0, leftCol: 0, bottomRow: 0, rightCol: 0 },
     imageUrl: "",
     input: "",
@@ -111,20 +111,20 @@ class App extends React.Component<any, IState> {
         // call server to find face, update user stats
         fetch(config.ENDPOINT_PUT_IMAGE, config.JSON_PUT_REQUEST)
             .then(response => {
-                if(response.status != 200) { throw new Error("error finding face") }
+                if(response.status !== 200) { throw new Error("error finding face") }
                 return response.json()
             }).then(response2 => {
-                let user = this.state.user;
+                const user = this.state.user;
 
-                //update user entry count to display
+                // update user entry count to display
                 user.entries = response2.entries
 
-                //extract face location data so can display box around face
+                // extract face location data so can display box around face
                 this.displayFaceBox(this.calculateFaceLocation(response2.data))
                 this.setState(
                     {user}
                 )
-            }).catch(error => { console.log("error getting face: " + error) })
+            }).catch(error => { throw new Error("error getting face: " + error) })
     }
 
     // handles state for signing in/out
@@ -136,13 +136,13 @@ class App extends React.Component<any, IState> {
             this.setState(initialState)
         }
 
-        //since initial state is set to signin route, need to update it when click register
+        // since initial state is set to signin route, need to update it when click register
         if(routeParam === config.ROUTE_REGISTER) {
             this.setState({route: config.ROUTE_REGISTER})
         }
     }
 
-    private loadUser = (user: User) => {
+    private loadUser = (user: IUser) => {
         this.setState({user});
     }
 }
