@@ -1,11 +1,11 @@
-import Box from "./Box";
-import User from "./User";
+import IBox from "./Box";
+import IUser from "./User";
 
 interface IState {
     input: string;   // input from text box
     imageUrl: string; // to send to Clarifai
-    box: Box, // face co-ordinates
-    user: User,
+    box: IBox, // face co-ordinates
+    user: IUser,
     route: string;
 }
 
