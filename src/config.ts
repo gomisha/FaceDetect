@@ -1,6 +1,6 @@
-//end points
+// end points
 
-const baseURL = "http://localhost:3000"
+const baseURL = process.env.REACT_APP_FD_SERVER_URL as string;
 
 export const ENDPOINT_GET_HOME = baseURL + "/";
 
@@ -14,21 +14,21 @@ export const ENDPOINT_POST_REGISTER = baseURL + "/register";
 
 export const ENDPOINT_PUT_IMAGE = baseURL + "/image";
 
-//JSON requests
+// JSON requests
 
 export const JSON_POST_REQUEST = { 
-    method: "post",
+    body: "",
     headers: { "Content-Type": "application/json"},
-    body: ""
+    method: "post"
 }
 
 export const JSON_PUT_REQUEST = {
-    method: "put",
+    body: "",
     headers: { "Content-Type": "application/json"},
-    body: ""
+    method: "put"
 }
 
-//Particles background
+// Particles background
 
 export const particlesOptions = {
     particles: {

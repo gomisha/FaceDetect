@@ -76,8 +76,8 @@ class SignIn extends React.Component<IProps, IState> {
                 this.props.onRouteChange('home');
                 this.props.loadUser(data);
             }).catch(error => {
-                //ignore error for now - won't authenticate and will just stay on login screen
-                //better than throwing error to user
+                // ignore error for now - won't authenticate and will just stay on login screen
+                // better than throwing error to user
             })
     }
 
