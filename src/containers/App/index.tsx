@@ -11,8 +11,8 @@ import IState from "./IStates";
 import FaceRecognition from "../../components/FaceRecognition";
 import ImageLinkForm from "../../components/ImageLinkForm";
 import Logo from "../../components/logo";
-import Navigation from "../../components/Navigation";
-import Rank from "../../components/Rank";
+import Navigation from "../../components/navigation";
+import Rank from "../../components/rank";
 
 // containers
 import Register from "../Register";
